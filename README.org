@@ -1,5 +1,45 @@
 * Minimal NixOS on ZFS Configuration
 This repository contains a minimal configuration needed to install
 NixOS with ZFS as root filesystem.
-* Uses doas
+* Directory Structure
+#+begin_src sh
+  flake.nix                    # entry point.
+                               # Defines input and output.
+
+  configuration.nix            # common configuration shared by all hosts
+
+  # custom functions
+  /my/default.nix              # imports lib.nix
+  /my/lib.nix                  # defines my.lib.mkHost function
+			       #
+			       # this function takes per-host configuration as input
+			       # and then apply them to NixOS modules
+			       # produces system configuration as result
+
+
+  # per-host configuration
+  /hosts
+  /hosts/qinghe/default.nix
+  /hosts/exampleHost/default.nix
+
+  # custom NixOS modules
+  /modules/default.nix         # imports other modules
+  /modules/networking          # defines my.networking options
+  /modules/fileSystems         # defines my.filesystems options
+  /modules/users               # defines my.users options
+  /modules/programs            # imports sway module
+  /modules/programs/sway       # defines my.programs.sway options
+  /modules/boot/               # defines my.boot options
+
+  # custom NixOS modules, not enabled by default
+  # "yc" is my user name
+  /modules/per-user            # imports yc module
+  /modules/per-user/yc         # defines my.yc.enable option
+  /modules/per-user/yc/*       # defines my.yc.* options
+
+#+end_src
+* Usage Notes
 This configuration use =doas= instead of the usual =sudo= command.
+
+I hope this minimal example can serve as an inspiration for your
+own NixOS configuration.  Happy Nixing!

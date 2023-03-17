@@ -16,5 +16,6 @@ in {
         symbolsFile = ./symbols.txt;
       };
     };
+    environment.variables = { XKB_DEFAULT_LAYOUT = "yc"; };
   };
 }

@@ -1,15 +1,15 @@
 { config, lib, pkgs, ... }:
 with lib; {
   imports = [
-    ./mpv
     ./emacs
     ./firefox
     ./tex
-    ./mail
     ./tablet
     ./virt
     ./keyboard
     ./hidden
+    ./home-manager
+    ./config-template
   ];
   options.my.yc.enable = mkOption {
     description = "enable yc options";

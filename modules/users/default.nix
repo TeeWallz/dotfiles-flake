@@ -56,6 +56,17 @@ in {
       doas.enable = true;
       sudo.enable = false;
     };
+    home-manager.users = listToAttrs (map (u: {
+      name = u;
+      value = {
+        home = {
+          username = "${u}";
+          homeDirectory = "/home/${u}";
+          stateVersion = "22.11";
+        };
+        programs.home-manager.enable = true;
+      };
+    }) (attrNames cfg));
     users.mutableUsers = false;
     users.users = listToAttrs (map (u: {
       name = u;

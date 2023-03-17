@@ -15,7 +15,8 @@ in {
       description = "normal software packages that emacs depends to run";
       type = with types; listOf package;
       default = with pkgs; [
-        auctex
+        # auctex fails to build, disabled for now
+        # auctex
         # spell checkers
         enchant
         nuspell
@@ -34,6 +35,7 @@ in {
         (with melpaPackages; [ nix-mode cdlatex notmuch ])
         ++ (with elpaPackages; [ use-package auctex pyim pyim-basedict ]));
       defaultEditor = true;
+      install = true;
     };
     environment.systemPackages = cfg.extraPackages;
   };
