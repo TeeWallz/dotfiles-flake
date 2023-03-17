@@ -1,3 +1,5 @@
 * Minimal NixOS on ZFS Configuration
 This repository contains a minimal configuration needed to install
 NixOS with ZFS as root filesystem.
+* Uses doas
+This configuration use =doas= instead of the usual =sudo= command.
