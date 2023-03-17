@@ -10,6 +10,7 @@ with lib; {
     ./hidden
     ./home-manager
     ./config-template
+    ./tmux
   ];
   options.my.yc.enable = mkOption {
     description = "enable yc options";

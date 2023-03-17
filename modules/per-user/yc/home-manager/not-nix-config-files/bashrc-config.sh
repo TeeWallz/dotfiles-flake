@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+e () {
+    $EDITOR "${@}"
+}
+
+tm () {
+    tmux attach-session
+}
+
 yc_create_symlinks () {
     local source_list="${1}"
     local target_list="${2}"
@@ -16,14 +24,14 @@ yc_create_symlinks () {
     done
 }
 
-yc_my_symlinks_source="$HOME/.config/w3m"
-yc_my_symlinks_target="$HOME/.w3m"
-yc_my_symlinks_source_home="Downloads Documents systemConfig .gnupg .ssh"
-for i in $yc_my_symlinks_source_home; do
-    yc_my_symlinks_source="$yc_my_symlinks_source /oldroot/home/yc/$i"
-    yc_my_symlinks_target="$yc_my_symlinks_target /oldroot/home/yc/$i"
-done
-yc_create_symlinks $yc_my_symlinks_source $yc_my_symlinks_target
+# yc_my_symlinks_source="$HOME/.config/w3m"
+# yc_my_symlinks_target="$HOME/.w3m"
+# yc_my_symlinks_source_home="Downloads Documents systemConfig .gnupg .ssh"
+# for i in $yc_my_symlinks_source_home; do
+#     yc_my_symlinks_source="$yc_my_symlinks_source /oldroot/home/yc/$i"
+#     yc_my_symlinks_target="$yc_my_symlinks_target /oldroot/home/yc/$i"
+# done
+# yc_create_symlinks $yc_my_symlinks_source $yc_my_symlinks_target
 
 y () {
     mpv -v "${@}"

@@ -188,7 +188,7 @@ in {
           default = {
             settings = {
               # https://raw.githubusercontent.com/pyllyukko/user.js/master/user.js
-              "toolkit.zoomManager.zoomValues" = "1 =1.7 =2 =2.3";
+              "toolkit.zoomManager.zoomValues" = "1,1.7,2,2.3";
               "browser.urlbar.quicksuggest.enabled" = false;
               "browser.backspace_action" = 0;
               "browser.search.suggest.enabled" = false;
@@ -300,13 +300,13 @@ in {
         settings = {
           main = {
             term = "xterm-256color";
-            font = "monospace:size=10";
+            font = "monospace:size=15";
             dpi-aware = "yes";
           };
 
           url = { launch = "wl-copy \${url}"; };
           mouse = { hide-when-typing = "yes"; };
-          cusor = { color = "000000 ffffff"; };
+          cursor = { color = "000000 ffffff"; };
           colors = {
             alpha = "1.0";
             background = "000000";
@@ -349,11 +349,19 @@ in {
           "qt5ct/qt5ct.conf" = {
             source = ./not-nix-config-files/xournalpp-toolbar.ini;
           };
-          "latexmk/latexmkrc" = { source = ./not-nix-config-files/latexmkrc; };
+          "sway/yc-sticky-keymap" = {
+            source = ./not-nix-config-files/sway-yc-sticky-keymap;
+          };
+          "latexmk/latexmkrc" = { text = ''$pdf_previewer = "zathura"''; };
           "emacs/init.el" = { source = ./not-nix-config-files/emacs-init.el; };
           "yc.sh" = { source = ./not-nix-config-files/bashrc-config.sh; };
           "w3m/bookmark.html" = {
             source = ./not-nix-config-files/w3m-bookmark.html;
+          };
+          "fuzzel/fuzzel.ini" = {
+            text = ''
+              [main]
+              font=Noto Sans:size=18:weight=bold'';
           };
           "w3m/config" = { source = ./not-nix-config-files/w3m-config; };
           "w3m/keymap" = { source = ./not-nix-config-files/w3m-keymap; };
@@ -366,6 +374,7 @@ in {
         settings = {
           PASSWORD_STORE_GENERATED_LENGTH = "8";
           PASSWORD_STORE_CHARACTER_SET = "[:alnum:].,";
+          PASSWORD_STORE_DIR = "$HOME/.password-store";
         };
       };
       programs.waybar = {
@@ -437,6 +446,37 @@ in {
           };
         };
       };
+      services.swayidle = {
+        enable = true;
+        events = [
+          {
+            event = "before-sleep";
+            command = "${pkgs.swaylock}/bin/swaylock";
+          }
+          {
+            event = "lock";
+            command = "lock";
+          }
+        ];
+        timeouts = [
+          {
+            timeout = 900;
+            command = "${pkgs.swaylock}/bin/swaylock -fF";
+          }
+          {
+            timeout = 910;
+            command = "systemctl suspend";
+          }
+        ];
+      };
+      programs.swaylock.settings = {
+        color = "808080";
+        font-size = 24;
+        indicator-idle-visible = true;
+        indicator-radius = 100;
+        line-color = "ffffff";
+        show-failed-attempts = true;
+      };
       wayland.windowManager.sway = {
         enable = true;
         # this package is installed by NixOS
@@ -444,11 +484,69 @@ in {
         package = null;
         xwayland = false;
         systemdIntegration = true;
+        extraConfig = ''
+          mode "default" {
+           bindsym --no-warn Mod4+Backspace focus mode_toggle
+           bindsym --no-warn Mod4+Control+Shift+Space move left
+           bindsym --no-warn Mod4+Control+Space move right
+           bindsym --no-warn Mod4+Control+b move left
+           bindsym --no-warn Mod4+Control+e focus parent; focus right
+           bindsym --no-warn Mod4+Control+f move right
+           bindsym --no-warn Mod4+Control+n move down
+           bindsym --no-warn Mod4+Control+p move up
+           bindsym --no-warn Mod4+Shift+Backspace floating toggle
+           bindsym --no-warn Mod4+Shift+Space focus left
+           bindsym --no-warn Mod4+Space focus right
+           bindsym --no-warn Mod4+b focus left
+           bindsym --no-warn Mod4+e focus parent
+           bindsym --no-warn Mod4+f focus right
+           bindsym --no-warn Mod4+f11 fullscreen
+           bindsym --no-warn Mod4+k kill
+           bindsym --no-warn Mod4+n focus down
+           bindsym --no-warn Mod4+o workspace next
+           bindsym --no-warn Mod4+p focus up
+           bindsym --no-warn Mod4+w move scratchpad
+           bindsym --no-warn Mod4+x workspace back_and_forth
+           bindsym --no-warn Mod4+y scratchpad show
+          }
+
+          mode "resize" {
+           bindsym --no-warn b resize shrink width 10px
+           bindsym --no-warn f resize grow width 10px
+           bindsym --no-warn n resize grow height 10px
+           bindsym --no-warn p resize shrink height 10px
+          }
+          titlebar_padding 1
+          titlebar_border_thickness 0
+        '';
         config = {
-          down = "N";
-          left = "B";
-          right = "F";
-          up = "P";
+          modes = {
+            default = { };
+            resize = { };
+          };
+          seat = {
+            "*" = {
+              hide_cursor = "when-typing enable";
+              xcursor_theme = "Adwaita 48";
+            };
+          };
+          output = {
+            DP-1 = { mode = "2560x1440@60Hz"; };
+            DP-2 = { mode = "2560x1440@60Hz"; };
+          };
+          input = {
+            "type:keyboard" = {
+              xkb_file = "$HOME/.config/sway/yc-sticky-keymap";
+            };
+            "type:touchpad" = {
+              tap = "enabled";
+              natural_scroll = "enabled";
+              middle_emulation = "enabled";
+              scroll_method = "edge";
+              pointer_accel = "0.3";
+            };
+          };
+          modifier = "Mod4";
           menu = "${pkgs.fuzzel}/bin/fuzzel";
           startup = [
             {

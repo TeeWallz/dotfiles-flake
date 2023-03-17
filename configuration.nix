@@ -17,6 +17,7 @@
   };
 
   boot = {
+    initrd.kernelModules = [ "i915" ];
     kernelModules = [ "kvm-intel" "kvm-amd" ];
     initrd = {
       availableKernelModules = [

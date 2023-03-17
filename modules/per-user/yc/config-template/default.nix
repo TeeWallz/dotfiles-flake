@@ -10,6 +10,10 @@ in {
     };
   };
   config = mkIf cfg.enable {
+    programs.gnupg.agent = {
+      enable = true;
+      pinentryFlavor = "tty";
+    };
     my = {
       boot = {
         # system = "aarch64-linux";
