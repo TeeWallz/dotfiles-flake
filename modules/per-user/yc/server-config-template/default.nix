@@ -28,6 +28,17 @@ in {
       };
     };
 
+    services.zfs = {
+      autoScrub = {
+        enable = true;
+        interval = "quarterly";
+      };
+      autoSnapshot = {
+        enable = true;
+        flags = "-k -p --utc";
+        monthly = 48;
+      };
+    };
     services.samba = {
       enable = true;
       openFirewall = true;
