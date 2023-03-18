@@ -26,7 +26,7 @@ rebuild-myos () {
 	return 1
     else
 	if test -f $dir/flake.nix; then
-	    doas nixos-rebuild $mode --flake $dir
+	    doas nixos-rebuild $mode --flake "git+file://${dir}"
 	else
 	    echo "no flake.nix found in $dir"
 	    return 1
