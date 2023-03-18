@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+export EDITOR="$EDITOR --create-frame"
 
 e () {
-    $EDITOR --create-frame "${@}"
+    $EDITOR "${@}"
 }
 
 tm () {
