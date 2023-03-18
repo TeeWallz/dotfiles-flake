@@ -155,6 +155,7 @@ msymlinks="
 /oldroot${HOME}/Downloads:${HOME}/Downloads
 /oldroot${HOME}/Documents:${HOME}/Documents
 /oldroot${HOME}/Maildir:${HOME}/Maildir
+/oldroot${HOME}/nixos-config:${HOME}/nixos-config
 /oldroot${HOME}/.gnupg:${HOME}/.gnupg
 /oldroot${HOME}/.ssh:${HOME}/.ssh
 /oldroot${HOME}/.password-store:${HOME}/.password-store

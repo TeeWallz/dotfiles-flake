@@ -114,9 +114,13 @@ in {
       programs.git.enable = true;
       zramSwap.enable = mkDefault true;
       boot = {
+        tmpOnTmpfs = true;
         kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
         supportedFilesystems = [ "zfs" ];
-        zfs.devNodes = cfg.devNodes;
+        zfs = {
+          devNodes = cfg.devNodes;
+          forceImportRoot = false;
+        };
         loader.efi = {
           canTouchEfiVariables = false;
           efiSysMountPoint = with builtins;

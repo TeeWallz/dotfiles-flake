@@ -9,6 +9,15 @@ in {
     };
   };
   config = mkIf cfg.enable {
+    # have a clean home
+    my.fileSystems.datasets = {
+      "rpool/nixos/home" = "/oldroot/home";
+    };
+    fileSystems."/home/yc" = {
+      device = "tmpfs";
+      fsType = "tmpfs";
+      options = [ "rw" "size=1G" "uid=yc" "gid=users" "mode=1700" ];
+    };
     home-manager.users.yc = {
       home.packages = with pkgs; [ ];
 
@@ -560,7 +569,7 @@ in {
             }
             { command = "systemctl --user start emacs"; }
           ];
-          terminal = "${pkgs.foot}/bin/foot";
+          terminal = "${pkgs.foot}/bin/foot ${pkgs.tmux} attach-session";
           window = { hideEdgeBorders = "both"; };
           workspaceAutoBackAndForth = true;
           workspaceLayout = "tabbed";
