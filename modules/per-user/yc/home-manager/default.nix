@@ -55,6 +55,9 @@ in {
           enable = true;
           userEmail = "jasper@apvc.uk";
           userName = "Maurice Zhou";
+          aliases = {
+            root = "rev-parse --show-toplevel";
+          };
         };
         mbsync.enable = true;
         msmtp.enable = true;
