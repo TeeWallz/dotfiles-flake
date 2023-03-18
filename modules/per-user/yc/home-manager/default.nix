@@ -523,6 +523,7 @@ in {
            bindsym --no-warn f resize grow width 10px
            bindsym --no-warn n resize grow height 10px
            bindsym --no-warn p resize shrink height 10px
+           bindsym --no-warn Space mode default
           }
           titlebar_padding 1
           titlebar_border_thickness 0
