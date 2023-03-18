@@ -61,7 +61,7 @@ in {
       value = {
         home = {
           username = "${u}";
-          homeDirectory = "/home/${u}";
+          homeDirectory = mkDefault "/home/${u}";
           stateVersion = "22.11";
         };
         programs.home-manager.enable = true;
