@@ -55,9 +55,7 @@ in {
           enable = true;
           userEmail = "jasper@apvc.uk";
           userName = "Maurice Zhou";
-          aliases = {
-            root = "rev-parse --show-toplevel";
-          };
+          aliases = { root = "rev-parse --show-toplevel"; };
         };
         mbsync.enable = true;
         msmtp.enable = true;
@@ -553,6 +551,7 @@ in {
            bindsym --no-warn Mod4+x workspace back_and_forth
            bindsym --no-warn Mod4+y scratchpad show
            bindsym --no-warn Shift+Print exec ${pkgs.grim}/bin/grim
+           bindsym --no-warn Mod4+o exec ${pkgs.foot}/bin/foot ${pkgs.tmux}/bin/tmux attach-session
           }
 
           mode "resize" {

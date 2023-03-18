@@ -10,16 +10,22 @@ in {
     };
   };
   config = mkIf cfg.enable {
-    fileSystems."/home/bt" = {
-      device = "rpool/data/bt";
-      fsType = "zfs";
-      options = [ "noatime" "X-mount.mkdir=755" ];
+    my.fileSystems.datasets = {
+      "rpool/nixos/home" = "/oldroot/home";
+      "rpool/data/file" = "/home";
     };
+    fileSystems = {
+      "/tmp/BitTorrent" = {
+        device = "rpool/data/bt";
+        fsType = "zfs";
+        options = [ "noatime" "X-mount.mkdir=755" ];
+      };
 
-    fileSystems."/var/lib/transmission/.config" = {
-      device = "/home/bt/.config";
-      fsType = "none";
-      options = [ "bind" "X-mount.mkdir=755" ];
+      "/var/lib/transmission/.config" = {
+        device = "/tmp/BitTorrent/.config";
+        fsType = "none";
+        options = [ "bind" "X-mount.mkdir=755" ];
+      };
     };
 
     services.samba = {
@@ -32,7 +38,7 @@ in {
       '';
       shares = {
         bt = {
-          path = "/home/bt";
+          path = "/tmp/BitTorrent";
           "read only" = true;
           browseable = "yes";
           "guest ok" = "yes";
@@ -47,10 +53,10 @@ in {
       performanceNetParameters = true;
       settings = {
         dht-enabled = true;
-        download-dir = "/home/bt/已下载";
+        download-dir = "/tmp/BitTorrent/已下载";
         download-queue-enabled = false;
         idle-seeding-limit-enabled = false;
-        incomplete-dir = "/home/bt/未完成";
+        incomplete-dir = "/tmp/BitTorrent/未完成";
         incomplete-dir-enabled = true;
         lpd-enabled = true;
         message-level = 1;
