@@ -306,7 +306,7 @@ in {
         hashKnownHosts = true;
         matchBlocks = let
           dotSshPath =
-            "${config.home-manager.users.yc.home.homeDirectory}/.ssh";
+            "${config.home-manager.users.yc.home.homeDirectory}/.ssh/";
         in {
           "github.com" = {
             # github.com:ne9z
