@@ -567,7 +567,7 @@ in {
             }
             { command = "systemctl --user start emacs"; }
           ];
-          terminal = "${pkgs.foot}/bin/foot ${pkgs.tmux} attach-session";
+          terminal = "${pkgs.foot}/bin/foot ${pkgs.tmux}/bin/tmux attach-session";
           window = { hideEdgeBorders = "both"; };
           workspaceAutoBackAndForth = true;
           workspaceLayout = "tabbed";
