@@ -162,6 +162,6 @@ in {
         "nixos-rebuild boot --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store";
       tm = "tmux attach-session";
     };
-    swapDevices = { };
+    swapDevices = [ ];
   };
 }
