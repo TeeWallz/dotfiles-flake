@@ -16,6 +16,11 @@ in {
       fsType = "tmpfs";
       options = [ "rw" "size=1G" "uid=yc" "gid=users" "mode=1700" ];
     };
+    programs.gnupg.agent = {
+      enable = true;
+      pinentryFlavor = (if config.programs.sway.enable then "qt" else "tty");
+    };
+
     home-manager.users.yc = {
       home.packages = with pkgs; [ ];
 
@@ -40,7 +45,6 @@ in {
           cursor-size = 48;
         };
       };
-      programs.gpg = { enable = true; };
       programs.bash = {
         enable = true;
         initExtra =
