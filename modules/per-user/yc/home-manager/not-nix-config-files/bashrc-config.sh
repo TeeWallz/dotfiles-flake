@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 e () {
-    $EDITOR "${@}"
+    $EDITOR --create-frame "${@}"
 }
 
 tm () {
