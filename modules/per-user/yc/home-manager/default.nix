@@ -301,6 +301,36 @@ in {
           };
         };
       };
+      programs.ssh = {
+        enable = true;
+        hashKnownHosts = true;
+        matchBlocks = let
+          dotSshPath =
+            "${config.home-manager.users.yc.home.homeDirectory}/.ssh";
+        in {
+          "github.com" = {
+            # github.com:ne9z
+            user = "git";
+            identityFile = dotSshPath + "yc";
+          };
+          "gitlab.com" = {
+            # gitlab.com:john8931
+            user = "git";
+            identityFile = dotSshPath + "tub_latex_repokey";
+          };
+          "tl.yc" = {
+            user = "yc";
+            identityFile = dotSshPath + "yc";
+            port = 65222;
+          };
+          "3ldetowqifu5ox23snmoblv7xapkd26qyvex6fwrg6zpdwklcatq.b32.i2p" = {
+            user = "yc";
+            identityFile = dotSshPath + "yc";
+            port = 65222;
+            proxyCommand = "{pkgs.libressl.nc}/bin/nc -x localhost:4447 %h %p";
+          };
+        };
+      };
       programs.foot = {
         enable = true;
         server.enable = true;

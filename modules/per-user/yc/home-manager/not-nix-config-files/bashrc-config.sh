@@ -179,7 +179,9 @@ msymlinks="
 /oldroot${HOME}/Maildir:${HOME}/Maildir
 /oldroot${HOME}/nixos-config:${HOME}/nixos-config
 /oldroot${HOME}/.gnupg:${HOME}/.gnupg
-/oldroot${HOME}/.ssh:${HOME}/.ssh
+/oldroot${HOME}/.ssh/known_hosts:${HOME}/.ssh/known_hosts
+/oldroot${HOME}/.ssh/yc:${HOME}/.ssh/yc
+/oldroot${HOME}/.ssh/tub_latex_repokey:${HOME}/.ssh/tub_latex_repo_key
 /oldroot${HOME}/.password-store:${HOME}/.password-store
 ${HOME}/.config/w3m:${HOME}/.w3m"
 ### script on login
