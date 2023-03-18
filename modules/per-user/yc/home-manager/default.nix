@@ -10,7 +10,9 @@ in {
   };
   config = mkIf cfg.enable {
     # have a clean home
-    my.fileSystems.datasets = { "rpool/nixos/home" = "/oldroot/home"; };
+    my.fileSystems.datasets = {
+      "rpool/nixos/home" = "/oldroot/home";
+    };
     fileSystems."/home/yc" = {
       device = "tmpfs";
       fsType = "tmpfs";

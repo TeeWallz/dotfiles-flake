@@ -27,7 +27,7 @@ in {
   };
   config.fileSystems = mkMerge (mapAttrsToList (dataset: mountpoint: {
     "${mountpoint}" = {
-      device = lib.mkDefault "${dataset}";
+      device = "${dataset}";
       fsType = "zfs";
       options = [ "X-mount.mkdir" ];
       neededForBoot = true;
