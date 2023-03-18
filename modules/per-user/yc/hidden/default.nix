@@ -96,6 +96,9 @@ in {
         };
 
       };
+      networking.hosts = {
+        "219:46f0:375b:722:38c7:1668:2599:dc38" = [ "tl.yc" ];
+      };
     }
     (mkIf cfg.resolv {
       networking.nameservers = [ "::1" ];
