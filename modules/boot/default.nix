@@ -56,15 +56,21 @@ in {
     };
   };
   config = mkIf (cfg.enable) (mkMerge [
+    {
+      my.fileSystems = {
+        datasets = {
+          "rpool/nixos/home" = mkDefault "/home";
+          "rpool/nixos/var/lib" = "/var/lib";
+          "rpool/nixos/var/log" = "/var/log";
+          "bpool/nixos/root" = "/boot";
+        };
+      };
+    }
     (mkIf cfg.immutable {
       my.fileSystems = {
         datasets = {
           "rpool/nixos/empty" = "/";
           "rpool/nixos/root" = "/oldroot";
-          "rpool/nixos/home" = mkDefault "/home";
-          "rpool/nixos/var/lib" = "/var/lib";
-          "rpool/nixos/var/log" = "/var/log";
-          "bpool/nixos/root" = "/boot";
         };
         bindmounts = {
           "/oldroot/nix" = "/nix";
@@ -90,16 +96,7 @@ in {
 
     })
     (mkIf (!cfg.immutable) {
-      my.fileSystems = {
-        datasets = {
-          "rpool/nixos/root" = "/";
-          "rpool/nixos/home" = mkDefault "/home";
-          "rpool/nixos/var/lib" = "/var/lib";
-          "rpool/nixos/var/log" = "/var/log";
-          "bpool/nixos/root" = "/boot";
-        };
-        bindmounts = { };
-      };
+      my.fileSystems = { datasets = { "rpool/nixos/root" = "/"; }; };
     })
     {
       my.fileSystems = {
