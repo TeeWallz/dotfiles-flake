@@ -163,6 +163,10 @@ mcreate_symblink () {
     local source=${1%:*}
     local target=${1#*:}
     if ! test -L "${target}"; then
+	if test -d "${target}"; then
+	    # rm dir created by home-manager
+	    rm -rf "${target}"
+	fi
 	if test -e "${source}"; then
             ln -s "${source}" "${target}"
 	fi
