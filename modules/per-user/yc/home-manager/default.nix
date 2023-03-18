@@ -327,7 +327,7 @@ in {
             user = "yc";
             identityFile = dotSshPath + "yc";
             port = 65222;
-            proxyCommand = "{pkgs.libressl.nc}/bin/nc -x localhost:4447 %h %p";
+            proxyCommand = "${pkgs.libressl.nc}/bin/nc -x localhost:4447 %h %p";
           };
         };
       };
