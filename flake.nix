@@ -26,6 +26,10 @@
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/qinghe { inherit system pkgs; });
+        tieling = let
+          system = "x86_64-linux";
+          pkgs = nixpkgs.legacyPackages.${system};
+        in my.lib.mkHost (import ./hosts/tieling { inherit system pkgs; });
       };
     };
 }

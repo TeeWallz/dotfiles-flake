@@ -11,6 +11,7 @@ with lib; {
     ./home-manager
     ./config-template
     ./tmux
+    ./server-config-template
   ];
   options.my.yc.enable = mkOption {
     description = "enable yc options";
