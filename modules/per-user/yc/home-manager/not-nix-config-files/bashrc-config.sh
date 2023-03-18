@@ -16,6 +16,24 @@ nix-reformat () {
     git ls-files | grep nix$ | while read i; do nixfmt $i; done
 }
 
+rebuild-myos () {
+    local mode="${1}"
+    local dir="$(pwd)"
+    if test -z "${mode}"; then
+	echo "rebuild nixos from flake inside $dir"
+	echo "no build mode specified"
+	echo "use 'boot' or 'switch'"
+	return 1
+    else
+	if test -f $dir/flake.nix; then
+	    doas nixos-rebuild $mode --flake $dir
+	else
+	    echo "no flake.nix found in $dir"
+	    return 1
+	fi
+    fi
+}
+
 doa ()
 {
     doas -s
@@ -162,9 +180,9 @@ msymlinks="
 ${HOME}/.config/w3m:${HOME}/.w3m"
 ### script on login
 if [ "$(tty)" = "/dev/tty1" ]; then
-    set -ex
+    set -e
     for mount in $msymlinks; do
 	mcreate_symblink $mount
     done
-    set +ex
+    set +e
 fi
