@@ -567,13 +567,15 @@ in {
             }
             { command = "systemctl --user start emacs"; }
           ];
-          terminal = "${pkgs.foot}/bin/foot ${pkgs.tmux}/bin/tmux attach-session";
+          terminal =
+            "${pkgs.foot}/bin/foot ${pkgs.tmux}/bin/tmux attach-session";
           window = { hideEdgeBorders = "both"; };
           workspaceAutoBackAndForth = true;
           workspaceLayout = "tabbed";
           focus = {
             followMouse = "always";
-            wrapping = "force";
+            # wrapping = "force";
+            forceWrapping = true;
           };
           gaps = {
             smartBorders = "no_gaps";
