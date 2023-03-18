@@ -74,10 +74,7 @@ in {
         inherit (cfg."${u}")
           initialHashedPassword extraGroups packages isSystemUser isNormalUser;
         openssh.authorizedKeys.keys = cfg."${u}".authorizedKeys;
-        description = if (u == "root") then
-          "System administrator"
-        else
-          cfg."${u}".description;
+        description = mkDefault cfg."${u}".description;
       };
     }) (attrNames cfg));
   };
