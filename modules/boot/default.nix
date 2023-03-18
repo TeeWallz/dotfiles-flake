@@ -61,7 +61,7 @@ in {
         datasets = {
           "rpool/nixos/empty" = "/";
           "rpool/nixos/root" = "/oldroot";
-          "rpool/nixos/home" = "/home";
+          "rpool/nixos/home" = mkDefault "/home";
           "rpool/nixos/var/lib" = "/var/lib";
           "rpool/nixos/var/log" = "/var/log";
           "bpool/nixos/root" = "/boot";
@@ -93,7 +93,7 @@ in {
       my.fileSystems = {
         datasets = {
           "rpool/nixos/root" = "/";
-          "rpool/nixos/home" = "/home";
+          "rpool/nixos/home" = mkDefault "/home";
           "rpool/nixos/var/lib" = "/var/lib";
           "rpool/nixos/var/log" = "/var/log";
           "bpool/nixos/root" = "/boot";
