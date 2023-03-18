@@ -97,7 +97,7 @@ in {
 
       };
       networking.hosts = {
-        "219:46f0:375b:722:38c7:1668:2599:dc38" = [ "tl.yc" ];
+        "200:8bcd:55f4:becc:4d85:2fa6:2ed2:5eba" = [ "tl.yc" ];
       };
     }
     (mkIf cfg.resolv {
