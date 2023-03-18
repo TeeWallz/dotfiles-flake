@@ -51,12 +51,12 @@ in {
       ];
     };
   }) cfg.efiSystemPartitions);
-  config.swapDevices = map (swap: {
+  config.swapDevices = mkDefault (map (swap: {
     device = "${config.my.boot.devNodes}/${swap}";
     discardPolicy = mkDefault "both";
     randomEncryption = {
       enable = true;
       allowDiscards = mkDefault true;
     };
-  }) cfg.swapPartitions;
+  }) cfg.swapPartitions);
 }
