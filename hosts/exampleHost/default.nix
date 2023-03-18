@@ -1,31 +1,38 @@
+# #
+##
+##  per-host configuration for exampleHost
+##
+##
+
 { system, pkgs, ... }: {
   my = {
     boot = {
-      # system = "aarch64-linux";
       inherit system;
       devNodes = "/dev/disk/by-id/";
       bootDevices = [ "bootDevices_placeholder" ];
       immutable = false;
-      # generate unique hostId with
-      # head -c4 /dev/urandom | od -A none -t x4
       hostId = "hostId_placeholder";
       isVm = false;
     };
 
     users = {
       root = {
-        # hash: mkpasswd -m SHA-512 -s
+        # generate hash with:
+        # mkpasswd -m SHA-512 -s
+        # set hash to "!" to disable login
         initialHashedPassword = "rootHash_placeholder";
+
         authorizedKeys = [ "sshKey_placeholder" ];
         isSystemUser = true;
       };
 
       my-user = {
-        # "!" means login disabled
         initialHashedPassword = "!";
         description = "J. Magoo";
+
         # a default group must be set
         group = "users";
+
         extraGroups = [ "wheel" ];
         packages = with pkgs; [ mg nixfmt ];
         isNormalUser = true;
@@ -36,7 +43,15 @@
       timeZone = "Europe/Berlin";
       wirelessNetworks = { "myWifi" = "myPass"; };
     };
+
     # enable sway, a tiling Wayland window manager
+    # Usage:
+    #   Step: change "false" to "true".
+    #   Step: add a normal user, see above.
+    #   Step: generate and set password hash for the new user.
+    #   Step: apply configuration, then reboot.
+    #   Step: after reboot, at text console, login as normal user.
+    #   Step: enter "sway" command then press "Return".
     programs = { sway.enable = false; };
   };
 }
