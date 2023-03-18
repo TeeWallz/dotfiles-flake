@@ -82,6 +82,7 @@ in {
     nix.settings.substituters =
       [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
     services.yggdrasil.persistentKeys = true;
+    boot.initrd.secrets = { "/oldroot/etc/zfs-key-rpool-data-file" = null; };
     services.i2pd.inTunnels = {
       ssh-server = {
         enable = true;
