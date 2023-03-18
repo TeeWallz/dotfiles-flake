@@ -60,12 +60,15 @@ in {
       my.fileSystems = {
         datasets = {
           "rpool/nixos/home" = mkDefault "/home";
-          "rpool/nixos/var/lib" = "/var/lib";
-          "rpool/nixos/var/log" = "/var/log";
+          "rpool/nixos/var/lib" = mkDefault "/var/lib";
+          "rpool/nixos/var/log" = mkDefault "/var/log";
           "bpool/nixos/root" = "/boot";
         };
       };
     }
+    (mkIf (!cfg.immutable) {
+      my.fileSystems = { datasets = { "rpool/nixos/root" = "/"; }; };
+    })
     (mkIf cfg.immutable {
       my.fileSystems = {
         datasets = {
@@ -87,16 +90,13 @@ in {
     })
     (mkIf (!cfg.isVm) {
       hardware = {
-        enableRedistributableFirmware = true;
+        enableRedistributableFirmware = mkDefault true;
         cpu = {
           intel.updateMicrocode = true;
           amd.updateMicrocode = true;
         };
       };
 
-    })
-    (mkIf (!cfg.immutable) {
-      my.fileSystems = { datasets = { "rpool/nixos/root" = "/"; }; };
     })
     {
       my.fileSystems = {
@@ -111,8 +111,9 @@ in {
       programs.git.enable = true;
       zramSwap.enable = mkDefault true;
       boot = {
-        tmpOnTmpfs = true;
-        kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+        tmpOnTmpfs = mkDefault true;
+        kernelPackages =
+          mkDefault config.boot.zfs.package.latestCompatibleLinuxPackages;
         supportedFilesystems = [ "zfs" ];
         zfs = {
           devNodes = cfg.devNodes;

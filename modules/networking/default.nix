@@ -22,7 +22,7 @@ in {
   };
   config = {
     services.openssh = {
-      enable = true;
+      enable = mkDefault true;
       # settings = { PasswordAuthentication = false; };
       passwordAuthentication = false;
     };
@@ -50,7 +50,7 @@ in {
     networking = {
       networkmanager = {
         enable = mkDefault true;
-        wifi = { macAddress = "random"; };
+        wifi = { macAddress = mkDefault "random"; };
       };
       firewall.enable = mkDefault true;
       hostName = cfg.hostName;

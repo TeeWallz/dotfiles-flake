@@ -53,8 +53,8 @@ in {
   };
   config = {
     security = {
-      doas.enable = true;
-      sudo.enable = false;
+      doas.enable = mkDefault true;
+      sudo.enable = mkDefault false;
     };
     home-manager.users = listToAttrs (map (u: {
       name = u;
@@ -62,7 +62,7 @@ in {
         home = {
           username = "${u}";
           homeDirectory = mkDefault "/home/${u}";
-          stateVersion = "22.11";
+          stateVersion = mkDefault "22.11";
         };
         programs.home-manager.enable = true;
       };
