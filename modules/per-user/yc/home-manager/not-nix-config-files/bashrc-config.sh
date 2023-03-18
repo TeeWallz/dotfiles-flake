@@ -8,31 +8,6 @@ tm () {
     tmux attach-session
 }
 
-yc_create_symlinks () {
-    local source_list="${1}"
-    local target_list="${2}"
-    local counter=1
-    local source=$(echo $source_list | cut -d' ' -f $counter)
-    while test -n $source; do
-	local target=$(echo $target_list | cut -d' ' -f $counter)
-	if ! test -L "${target}"; then
-	    ln -s "${source}" "${target}"
-	fi
-	counter=$(( $counter + 1 ))
-	source_list=$(echo $source_list | cut -d' ' -f ${counter}-)
-	target_list=$(echo $target_list | cut -d' ' -f ${counter}-)
-    done
-}
-
-# yc_my_symlinks_source="$HOME/.config/w3m"
-# yc_my_symlinks_target="$HOME/.w3m"
-# yc_my_symlinks_source_home="Downloads Documents systemConfig .gnupg .ssh"
-# for i in $yc_my_symlinks_source_home; do
-#     yc_my_symlinks_source="$yc_my_symlinks_source /oldroot/home/yc/$i"
-#     yc_my_symlinks_target="$yc_my_symlinks_target /oldroot/home/yc/$i"
-# done
-# yc_create_symlinks $yc_my_symlinks_source $yc_my_symlinks_target
-
 y () {
     mpv -v "${@}"
 }
@@ -72,30 +47,16 @@ wfr () {
     if test "$choice" = "60"; then
 	fps="60"
     fi
-    printf "do not run as root and use KMSgrab?\n"
-    printf "this is fast, use GPU only, but no mouse cursor\n"
-    printf "see https://trac.ffmpeg.org/wiki/Hardware/VAAPI\n"
-    printf "if no, enter n\n"
-    read choice
-    if test "$choice" = "n" ; then
-	if test -n $fps; then fps=",fps=$fps"; fi
-	wf-recorder \
-	    -c h264_vaapi \
-	    -d /dev/dri/renderD128 \
-	    -F format=nv12,hwupload${fps} \
-	    -f $filename
-    else
-	if test -n $fps; then 	fps="-framerate $fps"; fi
-	doas /usr/bin/env sh <<EOF
- umask ugo=rw && \
- ffmpeg -device /dev/dri/card0 \
- $fps \
- -f kmsgrab \
- -i - \
- -vf 'hwmap=derive_device=vaapi,scale_vaapi=format=nv12' \
- -c:v h264_vaapi \
- -qp 24 \
-$filename
+    if test -n $fps; then 	fps="-framerate $fps"; fi
+    doas /usr/bin/env sh <<EOF
+        umask ugo=rw && \
+	 ffmpeg -device /dev/dri/card0 \
+	 $fps \
+	 -f kmsgrab \
+	 -i - \
+	 -vf 'hwmap=derive_device=vaapi,scale_vaapi=format=nv12' \
+	 -c:v h264_vaapi \
+	 -qp 24 $filename
 EOF
 	# see this link for more ffmpeg video encoding options
 	# https://ffmpeg.org/ffmpeg-codecs.html#VAAPI-encoders
@@ -106,7 +67,6 @@ gm () {
     printf "laptop brightness: b\n"
     printf "gammastep:         g\n"
     printf "laptop screen:     s\n"
-    printf "fix mon res:       m\n"
     local choice
     read choice
     case $choice in
@@ -162,9 +122,6 @@ gm () {
 		    ;;
 	    esac
 	    ;;
-	m)
-	    swaymsg output DP-2 mode 3840x2160@30Hz scale 2
-	    ;;
     esac
 }
 
@@ -187,3 +144,9 @@ nmail () {
 	pass show de/uni/tub | head -n1 > $HOME/.config/tubpass
     fi
 }
+
+### script on login
+if [ "$(tty)" = "/dev/tty1" ]; then
+    set -ex
+    set +ex
+fi

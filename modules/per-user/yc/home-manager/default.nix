@@ -426,8 +426,8 @@ in {
             backlight = {
               device = "intel_backlight";
               format = "BRI {percent}%";
-              on-click = "brightnessctl set 100%";
-              on-click-right = "brightnessctl set 1%";
+              on-click-right = "brightnessctl set 100%";
+              on-click = "brightnessctl set 1%";
               on-scroll-down = "brightnessctl set 1%-";
               on-scroll-up = "brightnessctl set +1%";
             };
@@ -545,6 +545,10 @@ in {
               middle_emulation = "enabled";
               scroll_method = "edge";
               pointer_accel = "0.3";
+            };
+            "1149:8257:Kensington_Kensington_Slimblade_Trackball" = {
+              left_handed = "enabled";
+              pointer_accel = "1";
             };
           };
           modifier = "Mod4";
