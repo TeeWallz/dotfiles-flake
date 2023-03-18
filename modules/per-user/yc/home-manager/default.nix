@@ -508,6 +508,7 @@ in {
            bindsym --no-warn Mod4+w move scratchpad
            bindsym --no-warn Mod4+x workspace back_and_forth
            bindsym --no-warn Mod4+y scratchpad show
+           bindsym --no-warn Shift+Print exec ${pkgs.grim}/bin/grim
           }
 
           mode "resize" {
