@@ -60,7 +60,6 @@ wfr () {
 EOF
 	# see this link for more ffmpeg video encoding options
 	# https://ffmpeg.org/ffmpeg-codecs.html#VAAPI-encoders
-    fi
 }
 
 gm () {
@@ -132,10 +131,7 @@ tubb () {
     wl-copy < $HOME/.config/tubpass
 }
 
-# functions defined here will not be shown in autocomplete
-# but they works
 nmail () {
-    mkdir -p /home/yc/Documents/non/Maildir/apvc.uk/
     notmuch tag +flagged tag:flagged +passed tag:passed
     notmuch tag -unread tag:passed
     mbsync -a
@@ -145,8 +141,29 @@ nmail () {
     fi
 }
 
+mcreate_symblink () {
+    local source=${1%:*}
+    local target=${1#*:}
+    if ! test -L "${target}"; then
+	if test -e "${source}"; then
+            ln -s "${source}" "${target}"
+	fi
+    fi
+}
+
+msymlinks="
+/oldroot${HOME}/Downloads:${HOME}/Downloads
+/oldroot${HOME}/Documents:${HOME}/Documents
+/oldroot${HOME}/Maildir:${HOME}/Maildir
+/oldroot${HOME}/.gnupg:${HOME}/.gnupg
+/oldroot${HOME}/.ssh:${HOME}/.ssh
+/oldroot${HOME}/.password-store:${HOME}/.password-store
+${HOME}/.config/w3m:${HOME}/.w3m"
 ### script on login
 if [ "$(tty)" = "/dev/tty1" ]; then
     set -ex
+    for mount in $msymlinks; do
+	mcreate_symblink $mount
+    done
     set +ex
 fi
