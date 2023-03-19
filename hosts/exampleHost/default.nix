@@ -12,7 +12,7 @@
       bootDevices = [ "bootDevices_placeholder" ];
       immutable = false;
       hostId = "hostId_placeholder";
-      isVm = false;
+      availableKernelModules = [ "uas" "usb_storage" ];
     };
 
     users = {
