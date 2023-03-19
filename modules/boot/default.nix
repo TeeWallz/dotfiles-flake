@@ -91,10 +91,11 @@ in {
     (mkIf (!cfg.isVm) {
       hardware = {
         enableRedistributableFirmware = mkDefault true;
-        cpu = {
+        cpu = (if (cfg.system == "x86_64-linux") then {
           intel.updateMicrocode = true;
           amd.updateMicrocode = true;
-        };
+        } else
+          { });
       };
 
     })
