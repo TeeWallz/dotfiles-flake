@@ -198,3 +198,38 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     done
     set +e
 fi
+
+bootstrap="
+/oldroot${HOME}/Downloads:${HOME}/Downloads
+/oldroot${HOME}/Documents:${HOME}/Documents
+/oldroot${HOME}/Maildir:${HOME}/Maildir
+/oldroot${HOME}/nixos-config:${HOME}/nixos-config
+/oldroot${HOME}/.gnupg:${HOME}/.gnupg
+/oldroot${HOME}/.ssh/
+/oldroot${HOME}/.password-store:${HOME}/.password-store
+"
+
+mbootstrap () {
+    local choice
+    echo "do you know what am i going to do? type YES if you know"
+    read choice
+    if [ "$choice" != "YES" ]; then
+	return 1
+    fi
+
+    set -ex
+    local msymblinks="${1}"
+    local source=""
+    for mount in $msymblinks; do
+	source="${msyblinks%:*} ${source}"
+    done
+    doas /usr/bin/env bash source="${source}" user=$(whoami) <<-'EOF'
+for i in $source; do
+    if ! test -d "${i}"; then
+     mkdir "${i}"
+     chown ${user}:users "${i}"
+   fi
+done
+EOF
+    set +ex
+}
