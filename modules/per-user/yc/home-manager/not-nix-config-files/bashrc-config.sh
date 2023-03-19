@@ -238,8 +238,9 @@ set -ex
 done
 EOF
     if test -f $HOME/.ssh/yc && ! test -f /oldroot/$HOME/.ssh/yc; then
-	mv $HOME/.ssh/yc /oldroot/$HOME/.ssh/yc
+	cp $HOME/.ssh/yc /oldroot/$HOME/.ssh/yc
 	chmod u=rw,go= /oldroot/$HOME/.ssh/yc
+	chmod u=rw,go= $HOME/.ssh/yc
     elif ! test -f $HOME/.ssh/yc && ! test -f /oldroot/$HOME/.ssh/yc; then
 	echo "ERROR: private ssh key yc not found!!!"
 	return 1
