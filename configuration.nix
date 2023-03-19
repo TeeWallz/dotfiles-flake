@@ -9,9 +9,9 @@
     throw "refuse to build: git tree is dirty";
   system.stateVersion = "22.11";
 
-  services.emacs = { enable = true; };
+  services.emacs = { enable = lib.mkDefault true; };
   programs.neovim = {
-    enable = true;
+    enable = lib.mkDefault true;
     viAlias = true;
     vimAlias = true;
   };
