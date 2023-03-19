@@ -32,6 +32,10 @@
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/tieling { inherit system pkgs; });
+        yinzhou = let
+          system = "x86_64-linux";
+          pkgs = nixpkgs.legacyPackages.${system};
+        in my.lib.mkHost (import ./hosts/yinzhou { inherit system pkgs; });
       };
     };
 }
