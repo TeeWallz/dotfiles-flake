@@ -15,9 +15,6 @@ in {
         # system = "aarch64-linux";
         devNodes = "/dev/disk/by-id/";
         immutable = true;
-        # generate unique hostId with
-        # head -c4 /dev/urandom | od -A none -t x4
-        isVm = false;
       };
 
       users = {

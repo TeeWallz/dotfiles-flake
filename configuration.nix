@@ -9,31 +9,14 @@
     throw "refuse to build: git tree is dirty";
   system.stateVersion = "22.11";
 
+  imports =
+    [ "${inputs.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
+
   services.emacs = { enable = lib.mkDefault true; };
   programs.neovim = {
     enable = lib.mkDefault true;
     viAlias = true;
     vimAlias = true;
   };
-
-  boot = {
-    initrd.kernelModules = [ "i915" ];
-    kernelModules = [ "kvm-intel" "kvm-amd" ];
-    initrd = {
-      availableKernelModules = [
-        "ahci"
-        "xhci_pci"
-        "virtio_pci"
-        "virtio_blk"
-        "ehci_pci"
-        "nvme"
-        "uas"
-        "sd_mod"
-        "sr_mod"
-        "sdhci_pci"
-      ];
-    };
-  };
-
   environment.systemPackages = with pkgs; [ ];
 }

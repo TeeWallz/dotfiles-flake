@@ -580,9 +580,10 @@ in {
             DP-2 = { mode = "2560x1440@60Hz"; };
           };
           input = {
-            "type:keyboard" = {
+            "type:keyboard" = (if (config.my.yc.keyboard.enable) then {
               xkb_file = "$HOME/.config/sway/yc-sticky-keymap";
-            };
+            } else
+              { });
             "type:touchpad" = {
               tap = "enabled";
               natural_scroll = "enabled";

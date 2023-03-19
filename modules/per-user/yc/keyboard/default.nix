@@ -3,7 +3,7 @@ with lib;
 let cfg = config.my.yc.keyboard;
 in {
   options.my.yc.keyboard.enable = mkOption {
-    default = config.my.yc.enable;
+    default = false;
     type = types.bool;
   };
   config = mkIf cfg.enable {

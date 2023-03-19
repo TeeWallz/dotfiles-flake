@@ -7,5 +7,8 @@
     };
     networking.hostName = "qinghe";
     yc.config-template.enable = true;
+
+    # custom keyboard layout
+    yc.keyboard.enable = true;
   };
 }

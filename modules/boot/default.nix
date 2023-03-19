@@ -3,6 +3,7 @@ with lib;
 
 let cfg = config.my.boot;
 in {
+  imports = [ ./grub-for-arm64/grub.nix ];
   options.my.boot = {
     enable = mkOption {
       description = "Enable root on ZFS support";
@@ -28,13 +29,12 @@ in {
       type = types.nonEmptyListOf types.str;
       default = [ "ata-foodisk" ];
     };
+    availableKernelModules = mkOption {
+      type = types.nonEmptyListOf types.str;
+      default = [ "uas" "nvme" "ahci" ];
+    };
     immutable = mkOption {
       description = "Enable root on ZFS immutable root support";
-      type = types.bool;
-      default = false;
-    };
-    isVm = mkOption {
-      description = "if virtual machine, disable firmware and microcode";
       type = types.bool;
       default = false;
     };
@@ -88,17 +88,6 @@ in {
         fi
       '';
     })
-    (mkIf (!cfg.isVm) {
-      hardware = {
-        enableRedistributableFirmware = mkDefault true;
-        cpu = (if (cfg.system == "x86_64-linux") then {
-          intel.updateMicrocode = true;
-          amd.updateMicrocode = true;
-        } else
-          { });
-      };
-
-    })
     {
       my.fileSystems = {
         efiSystemPartitions =
@@ -110,8 +99,8 @@ in {
       networking.hostId = cfg.hostId;
       nix.settings.experimental-features = mkDefault [ "nix-command" "flakes" ];
       programs.git.enable = true;
-      zramSwap.enable = mkDefault true;
       boot = {
+        initrd.availableKernelModules = cfg.availableKernelModules;
         tmpOnTmpfs = mkDefault true;
         kernelPackages =
           mkDefault config.boot.zfs.package.latestCompatibleLinuxPackages;
@@ -120,27 +109,43 @@ in {
           devNodes = cfg.devNodes;
           forceImportRoot = false;
         };
-        loader.efi = {
-          canTouchEfiVariables = false;
-          efiSysMountPoint = with builtins;
-            ("/boot/efis/" + (head cfg.bootDevices)
-              + cfg.partitionScheme.efiBoot);
-        };
-        loader.generationsDir.copyKernels = true;
-        loader.grub = {
-          devices = (map (diskName: cfg.devNodes + diskName) cfg.bootDevices);
-          efiInstallAsRemovable = true;
-          enable = true;
-          version = 2;
-          copyKernels = true;
-          efiSupport = true;
-          zfsSupport = true;
-          extraInstallCommands = with builtins;
-            (toString (map (diskName: ''
-              cp -r ${config.boot.loader.efi.efiSysMountPoint}/EFI /boot/efis/${diskName}${cfg.partitionScheme.efiBoot}
-            '') (tail cfg.bootDevices)));
+        loader = {
+          efi = {
+            canTouchEfiVariables = false;
+            efiSysMountPoint = with builtins;
+              ("/boot/efis/" + (head cfg.bootDevices)
+                + cfg.partitionScheme.efiBoot);
+          };
+          generationsDir.copyKernels = true;
+          grub = {
+            devices = (map (diskName: cfg.devNodes + diskName) cfg.bootDevices);
+            efiInstallAsRemovable = true;
+            version = 2;
+            enable = mkDefault false;
+            copyKernels = true;
+            efiSupport = true;
+            zfsSupport = true;
+            extraInstallCommands = with builtins;
+              (toString (map (diskName: ''
+                cp -r ${config.boot.loader.efi.efiSysMountPoint}/EFI /boot/efis/${diskName}${cfg.partitionScheme.efiBoot}
+              '') (tail cfg.bootDevices)));
+          };
         };
       };
     }
+    (mkIf (cfg.system == "aarch64-linux") {
+      my.aarch64Grub = {
+        devices = [ "nodev" ];
+        efiInstallAsRemovable = true;
+        # used patched grub for arm64
+        enable = true;
+        version = 2;
+        copyKernels = true;
+        efiSupport = true;
+        zfsSupport = true;
+        extraInstallCommands = config.boot.loader.grub.extraInstallCommands;
+      };
+    })
+    (mkIf (cfg.system != "aarch64-linux") { boot.loader.grub.enable = true; })
   ]);
 }

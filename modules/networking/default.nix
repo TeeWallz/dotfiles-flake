@@ -23,8 +23,8 @@ in {
   config = {
     services.openssh = {
       enable = mkDefault true;
-      # settings = { PasswordAuthentication = false; };
-      passwordAuthentication = false;
+      # settings = { PasswordAuthentication = mkDefault false; };
+      passwordAuthentication = mkDefault false;
     };
     environment.etc = mkMerge (mapAttrsToList (name: pwd: {
       "NetworkManager/system-connections/${name}.nmconnection" = {
