@@ -253,6 +253,7 @@ EOF
     echo "restore gnupg"
     scp tl.yc:~/gpg.tar.xz  /oldroot${HOME}
     tar -axC /oldroot${HOME} -f /oldroot${HOME}/gpg.tar.xz
+    rm $HOME/.ssh/yc
     for mount in $msymlinks; do
 	mcreate_symblink $mount
     done
