@@ -19,6 +19,7 @@
     in {
       nixosConfigurations = {
         exampleHost = let
+          # if aarch64, change to aarch64-linux
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/exampleHost { inherit system pkgs; });
