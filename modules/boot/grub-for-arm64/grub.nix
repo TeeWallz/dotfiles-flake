@@ -130,8 +130,8 @@ in {
     my.aarch64Grub = {
 
       enable = mkOption {
-        default = !config.boot.isContainer;
-        defaultText = literalExpression "!config.boot.isContainer";
+        default = false;
+        defaultText = literalExpression "false";
         type = types.bool;
         description = lib.mdDoc ''
           Whether to enable the GNU GRUB boot loader.
