@@ -74,7 +74,7 @@ wfr () {
     if test -n $fps; then 	fps="-framerate $fps"; fi
     doas /usr/bin/env sh <<EOF
         umask ugo=rw && \
-	 ffmpeg -device /dev/dri/card0 \
+	 $(which ffmpeg) -device /dev/dri/card0 \
 	 $fps \
 	 -f kmsgrab \
 	 -i - \
