@@ -99,7 +99,6 @@ in {
       networking.hostId = cfg.hostId;
       nix.settings.experimental-features = mkDefault [ "nix-command" "flakes" ];
       programs.git.enable = true;
-      zramSwap.enable = mkDefault true;
       boot = {
         initrd.availableKernelModules = cfg.availableKernelModules;
         tmpOnTmpfs = mkDefault true;
