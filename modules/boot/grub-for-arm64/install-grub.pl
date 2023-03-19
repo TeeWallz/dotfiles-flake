@@ -1,3 +1,5 @@
+# this file was copied from
+# https://github.com/NixOS/nixpkgs/blob/release-22.11/nixos/modules/system/boot/loader/grub/install-grub.pl
 use strict;
 use warnings;
 use Class::Struct;

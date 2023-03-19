@@ -12,7 +12,11 @@
       bootDevices = [ "bootDevices_placeholder" ];
       immutable = false;
       hostId = "hostId_placeholder";
-      availableKernelModules = [ "uas" "usb_storage" ];
+      availableKernelModules = [
+        "ahci"  # for sata drive
+        "nvme"  # for nvme drive
+        "uas"   # for external usb drive
+      ];
     };
 
     users = {
