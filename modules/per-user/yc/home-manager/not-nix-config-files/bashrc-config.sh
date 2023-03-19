@@ -200,6 +200,7 @@ if [ "$(tty)" = "/dev/tty1" ]; then
 fi
 
 bootstrap="
+/oldroot${HOME}
 /oldroot${HOME}/Downloads:${HOME}/Downloads
 /oldroot${HOME}/Documents:${HOME}/Documents
 /oldroot${HOME}/Maildir:${HOME}/Maildir
@@ -225,7 +226,7 @@ mbootstrap () {
     doas /usr/bin/env source="${source}" user=$(whoami) bash <<-'EOF'
 for i in $source; do
     if ! test -d "${i}"; then
-     mkdir "${i}"
+     mkdir -p "${i}"
      chown ${user}:users "${i}"
    fi
 done
