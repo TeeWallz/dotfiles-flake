@@ -29,7 +29,7 @@ in {
   };
   config = mkIf (cfg.enable) {
     services.emacs = {
-      enable = true;
+      enable = false;
       package = buildEmacs (epkgs:
         with epkgs;
         (with melpaPackages; [ nix-mode cdlatex notmuch ])
