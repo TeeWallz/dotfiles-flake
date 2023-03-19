@@ -597,13 +597,10 @@ in {
           };
           modifier = "Mod4";
           menu = "${pkgs.fuzzel}/bin/fuzzel";
-          startup = [
-            {
-              command = "systemctl --user restart waybar";
-              always = true;
-            }
-            { command = "systemctl --user start emacs"; }
-          ];
+          startup = [{
+            command = "systemctl --user restart waybar";
+            always = true;
+          }];
           terminal =
             "${pkgs.foot}/bin/foot ${pkgs.tmux}/bin/tmux attach-session";
           window = { hideEdgeBorders = "both"; };

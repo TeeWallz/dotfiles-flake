@@ -2,6 +2,11 @@
 export EDITOR="$EDITOR --create-frame"
 
 e () {
+    if ! test -S $XDG_RUNTIME_DIR/emacs/server; then
+	if test -n $WAYLAND_DISPLAY; then
+	    systemctl start --user emacs
+	fi
+    fi
     $EDITOR "${@}"
 }
 

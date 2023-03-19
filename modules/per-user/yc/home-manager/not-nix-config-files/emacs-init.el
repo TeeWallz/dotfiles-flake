@@ -13,6 +13,8 @@
  '(default-input-method "german-postfix")
  '(elpy-rpc-virtualenv-path 'system)
  '(inhibit-startup-screen t)
+ '(interprogram-cut-function 'wl-copy)
+ '(interprogram-paste-function 'wl-paste)
  '(mail-envelope-from 'header)
  '(mail-host-address "lan")
  '(mail-specify-envelope-from t)
@@ -135,3 +137,22 @@
  )
 
 (electric-pair-mode t)
+
+;; wayland paste
+;; credit: yorickvP on Github
+(setq wl-copy-process nil)
+
+(defun wl-copy (text)
+  (setq wl-copy-process
+	(make-process
+	 :name "wl-copy"
+         :buffer nil
+         :command '("wl-copy" "-f" "-n")
+         :connection-type 'pipe))
+  (process-send-string wl-copy-process text)
+  (process-send-eof wl-copy-process))
+
+(defun wl-paste ()
+  (if (and wl-copy-process (process-live-p wl-copy-process))
+      nil ; should return nil if we're the current paste owner
+    (shell-command-to-string "wl-paste -n | tr -d \r")))
