@@ -36,6 +36,7 @@ in {
             "dialout"
           ];
           packages = with pkgs; [
+            ffmpeg
             mg
             nixfmt
             qrencode
