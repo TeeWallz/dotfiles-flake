@@ -222,7 +222,7 @@ mbootstrap () {
     for mount in $bootstrap; do
 	source="${mount%:*} ${source}"
     done
-    doas /usr/bin/env bash source="${source}" user=$(whoami) <<-'EOF'
+    doas /usr/bin/env source="${source}" user=$(whoami) bash <<-'EOF'
 for i in $source; do
     if ! test -d "${i}"; then
      mkdir "${i}"
