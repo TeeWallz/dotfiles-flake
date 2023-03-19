@@ -185,6 +185,7 @@ msymlinks="
 /oldroot${HOME}/Maildir:${HOME}/Maildir
 /oldroot${HOME}/nixos-config:${HOME}/nixos-config
 /oldroot${HOME}/.gnupg:${HOME}/.gnupg
+/oldroot${HOME}/.ssh/authorized_keys:${HOME}/.ssh/authorized_keys
 /oldroot${HOME}/.ssh/known_hosts:${HOME}/.ssh/known_hosts
 /oldroot${HOME}/.ssh/yc:${HOME}/.ssh/yc
 /oldroot${HOME}/.ssh/tub_latex_repokey:${HOME}/.ssh/tub_latex_repo_key
@@ -204,11 +205,14 @@ bootstrap="
 /oldroot${HOME}/Downloads:${HOME}/Downloads
 /oldroot${HOME}/Documents:${HOME}/Documents
 /oldroot${HOME}/Maildir:${HOME}/Maildir
-/oldroot${HOME}/nixos-config:${HOME}/nixos-config
 /oldroot${HOME}/.gnupg:${HOME}/.gnupg
 /oldroot${HOME}/.ssh/
-/oldroot${HOME}/.password-store:${HOME}/.password-store
 "
+
+mauthorizedKey () {
+    mkdir -p $HOME/.ssh
+    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINN0Jghx8opezUJS0akfLG8wpQ8U1rdZZw/e3v+nk70G yc@yc-eb820g4" >> $HOME/.ssh/authorized_keys
+}
 
 mbootstrap () {
     local choice
@@ -231,5 +235,23 @@ for i in $source; do
    fi
 done
 EOF
+    if test -f $HOME/.ssh/yc && ! test -f /oldroot/$HOME/.ssh/yc; then
+	mv $HOME/.ssh/yc /oldroot/$HOME/.ssh/yc
+    elif ! test -f $HOME/.ssh/yc && ! test -f /oldroot/$HOME/.ssh/yc; then
+	echo "ERROR: private ssh key yc not found!!!"
+	return 1
+    fi
+    echo "clone password repo"
+    git clone tl.yc:~/githost/pass /oldroot${HOME}/.password-store
+    echo "clone sysconf repo"
+    git clone tl.yc:~/githost/dotfiles-flake /oldroot${HOME}/nixos-config
+    git -C /oldroot${HOME}/nixos-config checkout personal
+    echo "restore gnupg"
+    scp tl.yc:~/gpg.tar.xz  /oldroot${HOME}
+    tar -C /oldroot${HOME} axf gpg.tar.xz
+    for mount in $msymlinks; do
+	mcreate_symblink $mount
+    done
+    echo "EXIT_SUCCESS"
     set +ex
 }
