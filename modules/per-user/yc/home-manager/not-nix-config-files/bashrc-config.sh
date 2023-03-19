@@ -252,7 +252,7 @@ EOF
     git -C /oldroot${HOME}/nixos-config checkout personal
     echo "restore gnupg"
     scp tl.yc:~/gpg.tar.xz  /oldroot${HOME}
-    tar -C /oldroot${HOME} axf gpg.tar.xz
+    tar -axC /oldroot${HOME} -f /oldroot${HOME}/gpg.tar.xz
     for mount in $msymlinks; do
 	mcreate_symblink $mount
     done
