@@ -228,11 +228,13 @@ mbootstrap () {
 	source="${mount%:*} ${source}"
     done
     doas /usr/bin/env source="${source}" user=$(whoami) bash <<-'EOF'
+set -ex
 for i in $source; do
     if ! test -d "${i}"; then
      mkdir -p "${i}"
-     chown -R ${user}:users "${i}"
    fi
+   chown -R  ${user}:users /oldroot/home
+set -ex
 done
 EOF
     if test -f $HOME/.ssh/yc && ! test -f /oldroot/$HOME/.ssh/yc; then
