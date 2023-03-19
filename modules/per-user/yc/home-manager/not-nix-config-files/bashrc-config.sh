@@ -231,7 +231,7 @@ mbootstrap () {
 for i in $source; do
     if ! test -d "${i}"; then
      mkdir -p "${i}"
-     chown ${user}:users "${i}"
+     chown -R ${user}:users "${i}"
    fi
 done
 EOF
