@@ -218,10 +218,9 @@ mbootstrap () {
     fi
 
     set -ex
-    local msymblinks="${1}"
     local source=""
-    for mount in $msymblinks; do
-	source="${msyblinks%:*} ${source}"
+    for mount in $bootstrap; do
+	source="${mount%:*} ${source}"
     done
     doas /usr/bin/env bash source="${source}" user=$(whoami) <<-'EOF'
 for i in $source; do
