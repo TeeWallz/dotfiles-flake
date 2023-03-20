@@ -22,7 +22,7 @@ nix-reformat () {
     git ls-files | grep nix$ | while read i; do nixfmt $i; done
 }
 
-rebuild-myos () {
+Nr () {
     local mode="${1}"
     local dir="$(pwd)"
     if test -z "${mode}"; then
@@ -31,6 +31,7 @@ rebuild-myos () {
 	echo "use 'boot' or 'switch'"
 	return 1
     else
+	cd $HOME/nixos-config
 	if test -f $dir/flake.nix; then
 	    doas nixos-rebuild $mode --flake "git+file://${dir}"
 	else
@@ -252,7 +253,7 @@ EOF
     git -C /oldroot${HOME}/nixos-config checkout personal
     echo "restore gnupg"
     scp tl.yc:~/gpg.tar.xz  /oldroot${HOME}
-    tar -axC /oldroot${HOME} -f /oldroot${HOME}/gpg.tar.xz
+    tar -axC /oldroot${HOME} -f /oldroot/${HOME}/gpg.tar.xz
     rm $HOME/.ssh/yc
     for mount in $msymlinks; do
 	mcreate_symblink $mount

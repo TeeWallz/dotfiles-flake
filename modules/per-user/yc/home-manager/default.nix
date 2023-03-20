@@ -55,7 +55,6 @@ in {
           enable = true;
           userEmail = "jasper@apvc.uk";
           userName = "Maurice Zhou";
-          aliases = { root = "rev-parse --show-toplevel"; };
         };
         mbsync.enable = true;
         msmtp.enable = true;
@@ -128,9 +127,9 @@ in {
           "<C-c>" = "copy_link";
           "f" = "follow";
           "m" = "mark_add";
-          "'" = "mark_evaluate";
-          "," = "navigate next";
-          "." = "navigate previous";
+          "\\'" = "mark_evaluate";
+          "\\," = "navigate next";
+          "\\." = "navigate previous";
           "<A-Right>" = "navigate next";
           "<A-Left>" = "navigate previous";
           "<C-P>" = "print";
