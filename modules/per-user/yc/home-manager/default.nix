@@ -190,7 +190,6 @@ in {
           font = "Monospace bold 16";
           guioptions = "hv";
           zoom-step = 3;
-          sandbox = "strict";
         };
       };
       programs.firefox = {
