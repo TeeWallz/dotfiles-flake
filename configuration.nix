@@ -12,11 +12,8 @@
   imports =
     [ "${inputs.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
 
-  services.emacs = { enable = lib.mkDefault true; };
-  programs.neovim = {
-    enable = lib.mkDefault true;
-    viAlias = true;
-    vimAlias = true;
-  };
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    mg # emacs-like editor
+    busybox # vi-like editor
+  ];
 }
