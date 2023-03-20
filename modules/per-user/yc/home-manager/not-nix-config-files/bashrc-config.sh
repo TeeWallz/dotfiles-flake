@@ -217,7 +217,7 @@ mauthorizedKey () {
 
 mbootstrap () {
     local choice
-    echo "you need to run this in a nested shell! type YES if you know"
+    echo "you need to run this in a SUBSHELL. type YES if you know"
     read choice
     if [ "$choice" != "YES" ]; then
 	return 1
