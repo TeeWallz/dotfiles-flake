@@ -159,7 +159,6 @@ in {
           "r" = "jumplist forward";
           "<A-r>" = "bisect forward";
           "<A-l>" = "bisect backward";
-          "#" = "still need to use '/' to trigger search";
           "<C-s>" = "search forward";
           "<C-r>" = "search backward";
           "p" = "snap_to_page";
@@ -191,6 +190,7 @@ in {
           font = "Monospace bold 16";
           guioptions = "hv";
           zoom-step = 3;
+          sandbox = "strict";
         };
       };
       programs.firefox = {
