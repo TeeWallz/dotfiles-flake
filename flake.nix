@@ -37,6 +37,11 @@
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/yinzhou { inherit system pkgs; });
+
+        zamorak = let
+          system = "x86_64-linux";
+          pkgs = nixpkgs.legacyPackages.${system};
+        in my.lib.mkHost (import ./hosts/zamorak { inherit system pkgs; });
       };
     };
 }
