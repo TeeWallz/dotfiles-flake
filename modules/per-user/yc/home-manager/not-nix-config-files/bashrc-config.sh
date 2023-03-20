@@ -24,7 +24,6 @@ nix-reformat () {
 
 Nr () {
     local mode="${1}"
-    local dir="$(pwd)"
     if test -z "${mode}"; then
 	echo "rebuild nixos from flake inside $dir"
 	echo "no build mode specified"
@@ -32,6 +31,7 @@ Nr () {
 	return 1
     else
 	cd $HOME/nixos-config
+	local dir="$(pwd)"
 	if test -f $dir/flake.nix; then
 	    doas nixos-rebuild $mode --flake "git+file://${dir}"
 	else
