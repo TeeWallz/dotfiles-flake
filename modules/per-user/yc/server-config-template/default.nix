@@ -170,7 +170,7 @@ in {
     };
     environment.shellAliases = {
       Nb =
-        "git -C /etc/nixos pull && nixos-rebuild boot --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store";
+        "git -C /etc/nixos pull && if test -n $TMUX; then echo 'not in tmux'; else nixos-rebuild boot --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store fi";
       tm = "tmux attach-session";
       e = "$EDITOR";
     };
