@@ -19,19 +19,20 @@
     in {
       nixosConfigurations = {
         exampleHost = let
-          # if aarch64, change to aarch64-linux
-          # check with "uname -m" command
           system = "systemType_placeholder";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/exampleHost { inherit system pkgs; });
+
         qinghe = let
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/qinghe { inherit system pkgs; });
+
         tieling = let
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/tieling { inherit system pkgs; });
+
         yinzhou = let
           system = "x86_64-linux";
           pkgs = nixpkgs.legacyPackages.${system};
