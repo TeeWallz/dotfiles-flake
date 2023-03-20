@@ -176,7 +176,6 @@ in {
       tm = "tmux attach-session";
       e = "$EDITOR";
     };
-    services.emacs.enable = true;
     swapDevices = [ ];
   };
 }
