@@ -172,7 +172,9 @@ in {
       Nb =
         "nixos-rebuild boot --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store";
       tm = "tmux attach-session";
+      e = "$EDITOR";
     };
+    services.emacs.enable = true;
     swapDevices = [ ];
   };
 }
