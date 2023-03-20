@@ -21,7 +21,7 @@
         exampleHost = let
           # if aarch64, change to aarch64-linux
           # check with "uname -m" command
-          system = "x86_64-linux";
+          system = "systemType_placeholder";
           pkgs = nixpkgs.legacyPackages.${system};
         in my.lib.mkHost (import ./hosts/exampleHost { inherit system pkgs; });
         qinghe = let
