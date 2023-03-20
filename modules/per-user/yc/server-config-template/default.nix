@@ -177,5 +177,6 @@ in {
       e = "$EDITOR";
     };
     swapDevices = [ ];
+    boot.kernelPackages = linuxKernel.packages.linux_hardened;
   };
 }
