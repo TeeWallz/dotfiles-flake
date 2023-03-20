@@ -169,10 +169,10 @@ in {
       };
     };
     environment.shellAliases = {
-      Nb =
-        "if test -z \"$TMUX\"; then echo 'not in tmux'; else nixos-rebuild boot --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store --flake git+file:///home/yc/githost/dotfiles-flake; fi";
-      Ns =
-        "if test -z \"$TMUX\"; then echo 'not in tmux'; else nixos-rebuild switch --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store --flake git+file:///home/yc/githost/dotfiles-flake; fi";
+      Nb = ''
+        if test -z "$TMUX"; then echo 'not in tmux'; else nixos-rebuild boot --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store --flake git+file:///home/yc/githost/dotfiles-flake; fi'';
+      Ns = ''
+        if test -z "$TMUX"; then echo 'not in tmux'; else nixos-rebuild switch --option substituters https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store --flake git+file:///home/yc/githost/dotfiles-flake; fi'';
       tm = "tmux attach-session";
       e = "$EDITOR";
     };

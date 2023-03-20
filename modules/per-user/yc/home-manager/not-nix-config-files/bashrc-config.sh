@@ -22,15 +22,12 @@ nix-reformat () {
     git ls-files | grep nix$ | while read i; do nixfmt $i; done
 }
 
-Nr () {
-    local mode="${1}"
-    if test -z "${mode}"; then
-	echo "no build mode specified"
-	echo "use 'boot' or 'switch'"
-	return 1
-    else
-	doas nixos-rebuild $mode --flake "git+file://$HOME/nixos-config"
-    fi
+Ns () {
+    doas nixos-rebuild switch --flake "git+file://$HOME/nixos-config"
+}
+
+Nb () {
+    doas nixos-rebuild boot --flake "git+file://$HOME/nixos-config"
 }
 
 doa ()
